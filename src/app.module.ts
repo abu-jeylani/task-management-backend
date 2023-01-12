@@ -8,7 +8,7 @@ import { configValidationSchema } from './config.schema';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [`.env.stage.${process.env.STAGE}`],
+      envFilePath: [`.env`],
       validationSchema: configValidationSchema,
     }),
     TasksModule,
@@ -19,10 +19,10 @@ import { configValidationSchema } from './config.schema';
         const isProduction = configService.get('STAGE') === 'prod';
 
         return {
-          // ssl: isProduction,
-          // extra: {
-          //   ssl: isProduction ? { rejectUnauthorized: false } : null,
-          // },
+          ssl: isProduction,
+          extra: {
+            ssl: isProduction ? { rejectUnauthorized: false } : null,
+          },
           type: 'postgres',
           autoLoadEntities: true,
           synchronize: true,
